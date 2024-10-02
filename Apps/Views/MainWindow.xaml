@@ -11,6 +11,9 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <StackPanel Grid.Column="1">
             <Frame Height="auto" NavigationUIVisibility="Hidden" Source="Pages/ConfigPage.xaml">

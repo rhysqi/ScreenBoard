@@ -9,14 +9,20 @@ public class SystemMetricsModel
 
     private const int SM_CXSCREEN = 0;
     private const int SM_CYSCREEN = 1;
+    private const int SM_CYCAPTION = 4;
 
     int GetScreenWidht()
     {
         return GetSystemMetrics(SM_CXSCREEN);
     }
-
+    
     int GetScreenHeight()
     {
         return GetSystemMetrics(SM_CYSCREEN);
+    }
+
+    int GetCaptionHeigt()
+    {
+        return GetSystemMetrics(SM_CYCAPTION);
     }
 }

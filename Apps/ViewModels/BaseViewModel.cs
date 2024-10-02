@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace ScreenBoard.ViewModels;
 
-internal class BaseViewModel
+public class BaseViewModel
 {
     public class RelayCommand : ICommand
     {
