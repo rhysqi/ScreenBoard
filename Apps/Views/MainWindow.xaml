@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ScreenBoard.Views"
+        xmlns:local="clr-namespace:ScreenBoard.Views" xmlns:viewmodels="clr-namespace:ScreenBoard.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
+        WindowStyle="SingleBorderWindow"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -12,13 +13,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1">
-            <Frame Height="auto" NavigationUIVisibility="Hidden" Source="Pages/ConfigPage.xaml">
-                
-            </Frame>
+        <StackPanel Grid.Column="1" Grid.Row="1"
+                    VerticalAlignment="Stretch">
+            <Frame NavigationUIVisibility="Hidden" Grid.Row="1"
+                   Source="Pages/ConfigPage.xaml" />
         </StackPanel>
     </Grid>
 </Window>

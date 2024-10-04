@@ -21,7 +21,7 @@ public class SystemMetricsModel
         return GetSystemMetrics(SM_CYSCREEN);
     }
 
-    int GetCaptionHeigt()
+    public int GetCaptionHeight()
     {
         return GetSystemMetrics(SM_CYCAPTION);
     }

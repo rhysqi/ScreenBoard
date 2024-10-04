@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 
 namespace ScreenBoard.Models;
 
 internal class ConfigModel
 {
-    [DllImport("user32.lib")]
-    public static extern bool RegisterHotkeys(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
+    // Declare the config model
     private string? ScreenColor;
     private int Opacity;
     private string? PenColor;
-    
-    
+
+    // Default value if the value are not correct
+    private string? dftScreenColor = "000000";
+    private uint dftOpacity = 90;
+    private string? dftPenColor = "ffffff";
 }

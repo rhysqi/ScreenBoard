@@ -12,8 +12,10 @@ namespace ScreenBoard.Models;
 
 internal class RegisterHotKeysModel
 {
+    // Win32 window message hotkeys
     private const int WM_HOTKEY = 0x0312;
 
+    // Using Win32 dll import for hotkeys
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
@@ -28,4 +30,5 @@ internal class RegisterHotKeysModel
 
     // Virtual key for 'O'
     private const uint VK_O = 0x4F;
+    
 }

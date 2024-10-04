@@ -15,13 +15,16 @@ public class ConfigPageViewModel
     public ICommand? RegisterHotkeys {  get; set; }
 
     public ICommand? Apply {  get; set; }
-    public ICommand? Reset {  get; set; }
+    public ICommand? Default {  get; set; }
+    public ICommand? Verify {  get; set; }
 
     public ConfigPageViewModel()
     {
-        Apply = new RelayCommand(OnApply);
-        Reset = new RelayCommand(OnReset);
         QuickGuide = new RelayCommand(onQuickGuide);
+
+        Apply = new RelayCommand(OnApply);
+        Default = new RelayCommand(OnDefault);
+        Verify = new RelayCommand(onVerify);
     }
 
     private void OnApply(object? parameter)
@@ -29,18 +32,25 @@ public class ConfigPageViewModel
         
     }
 
-    private void OnReset(object? parameter)
+    private void OnDefault(object? parameter)
     {
         
+    }
+
+    private void onVerify(object? parameter)
+    {
+
     }
 
     private void onQuickGuide(object? parameter)
     {
         const string Msg =
-            "ESC: For quit from ScreenBoard\n"
-            + "LMB: For use the tools\n"
-            + "RMB: For swapping between pen and eraser\n";
-
+            "ESC: for quit from ScreenBoard\n"
+            + "LMB: for use the tools\n"
+            + "RMB: for swapping between pen and eraser\n"
+            + "Scroll: for change size\n"
+            + "C: for clear board\n\0";
+        
         const string Cap = "ScreenBoard Quick Guide";
 
         MessageBox.Show(Msg, Cap, MessageBoxButton.OK, MessageBoxImage.Information);

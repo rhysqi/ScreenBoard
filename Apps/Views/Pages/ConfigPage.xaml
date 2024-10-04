@@ -5,12 +5,75 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ScreenBoard.Views.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="200"
       Title="ConfigPage">
 
-    <Grid Background="Black" VerticalAlignment="Center">
-        <StackPanel Margin="10">
-            <Button Content="Hello"></Button>
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button Height="30" Width="auto" Content="Quick Guide" Command="{Binding QuickGuide}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Separator Height="10" />
+            
+            <TextBlock Text="Configuration" HorizontalAlignment="Center" />
+
+            <WrapPanel>
+                <TextBlock Width="75" Text="Board Color" Margin="7" />
+                <TextBox MaxLength="6" Width="50" Margin="0"
+                         GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 000000"
+                         AcceptsReturn="False" VerticalAlignment="Center" />
+            </WrapPanel>
+
+            <WrapPanel>
+                <TextBlock Width="75" Text="Board Opacity" Margin="7" />
+                <TextBox MaxLength="3" Width="50"
+                         GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 100"
+                        AcceptsReturn="False" VerticalAlignment="Center" />
+            </WrapPanel>
+
+            <WrapPanel>
+                <TextBlock Width="75" Text="Pen Color" Margin="7" />
+                <TextBox MaxLength="6" Width="50" HorizontalAlignment="Right"
+                         GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: ffffff"
+                        AcceptsReturn="False" VerticalAlignment="Center" />
+            </WrapPanel>
+
+            <Separator Height="10" />
+            <Button Content="Default" Command="{Binding Default}"
+                    Width="120" VerticalAlignment="Bottom">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Separator Height="10" />
+            <Button Content="Apply" Command="{Binding Apply}"
+                    Width="120" VerticalAlignment="Bottom">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Separator Height="10" />
+
+            <Button Content="Verify" Command="{Binding Verify}"
+                    Width="120" VerticalAlignment="Bottom">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Separator Height="10" />
+
         </StackPanel>
     </Grid>
 </Page>
