@@ -3,15 +3,15 @@
 #endif /* UNICODE */
 
 #include "../include/App-Core.h"
+#include "Core-Event.h"
 
-#define MARGIN 4
+#define MARGIN 3
 
 #include <Windows.h>
 #include <winuser.h>
 #include <minwindef.h>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-int ActionKeyDown(HWND hwnd, WPARAM wParam);
 
 BOOL drawing = FALSE;  // Indicates if we are in the process of drawing
 POINT lastPoint;       // Last mouse position
@@ -152,7 +152,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         
         case WM_KEYDOWN:
         {
-            ActionKeyDown(hwnd, wParam);
+            ActionKeyDown(hwnd, wParam, memoryHDC);
             return 0;
         }
 
@@ -177,23 +177,4 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             return 0;
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
-int ActionKeyDown(HWND hwnd, WPARAM wParam)
-{
-    if(wParam == VK_ESCAPE)
-    {
-        PostQuitMessage(0);
-    }
-
-    if(wParam == 0x43)
-    {
-        // Clear the drawing buffer
-        PatBlt(memoryHDC, 0, 0, GetSystemMetrics(SM_CXFULLSCREEN), GetSystemMetrics(SM_CYFULLSCREEN), WHITENESS);
-
-        // Invalidate the window to force a repaint
-        InvalidateRect(hwnd, NULL, TRUE); // hWnd should be a global or passed in some way
-        UpdateWindow(hwnd);
-    }
-    return 0;
 }
