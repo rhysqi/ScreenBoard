@@ -14,7 +14,9 @@
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 BOOL drawing = FALSE;  // Indicates if we are in the process of drawing
+BOOL erasing = FALSE;  // Indicates if we are in the process of erasing
 POINT lastPoint;       // Last mouse position
+
 HDC memoryHDC;
 HBITMAP hBitmap;
 int brushSize = 5;
@@ -57,7 +59,7 @@ int __fastcall AppCore_Window()
     }
 
     // Make the window transparent
-    SetLayeredWindowAttributes(hInitWindow, 0, 80, LWA_ALPHA);
+    SetLayeredWindowAttributes(hInitWindow, 0, 200, LWA_ALPHA);
 
     // Create a memory HDC for off-screen drawing
     HDC hdc = GetDC(hInitWindow);
@@ -99,6 +101,16 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             return 0;
         }
 
+        case WM_RBUTTONDOWN:
+        {
+            // Capture mouse input so we keep drawing even if cursor leaves window
+            SetCapture(hwnd);
+            erasing = TRUE;  // Start drawing
+            lastPoint.x = LOWORD(lParam);  // Get starting x-coordinate
+            lastPoint.y = HIWORD(lParam);  // Get starting y-coordinate
+            return 0;
+        }
+
         case WM_MOUSEMOVE:
         {
             if (drawing) {
@@ -126,6 +138,32 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 // Force the window to repaint itself
                 InvalidateRect(hwnd, NULL, FALSE);
             }
+            if (erasing)
+            {
+                // Get the current mouse position
+                POINT currentPoint;
+                currentPoint.x = LOWORD(lParam);
+                currentPoint.y = HIWORD(lParam);
+
+                // Check if the current point is within the margin
+                if (currentPoint.x < MARGIN || currentPoint.x > GetSystemMetrics(SM_CXFULLSCREEN) - MARGIN ||
+                    currentPoint.y < MARGIN || currentPoint.y > GetSystemMetrics(SM_CYFULLSCREEN) - MARGIN) {
+                    // If it reaches the limit, don't draw
+                    return 0;
+                }
+
+                // Draw a line from the last point to the current point in memory HDC
+                MoveToEx(memoryHDC, lastPoint.x, lastPoint.y, NULL);
+                HPEN hPen = CreatePen(PS_SOLID, brushSize, RGB(255, 255, 255)); // Create a pen with the current brush size
+                SelectObject(memoryHDC, hPen);
+                LineTo(memoryHDC, currentPoint.x, currentPoint.y);
+
+                // Update the last point to the current point
+                lastPoint = currentPoint;
+
+                // Force the window to repaint itself
+                InvalidateRect(hwnd, NULL, FALSE);
+            }
             return 0;
         }
 
@@ -134,6 +172,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             // Release the mouse capture and stop drawing
             ReleaseCapture();
             drawing = FALSE;
+            return 0;
+        }
+        case WM_RBUTTONUP:
+        {
+            ReleaseCapture();
+            erasing = FALSE;
             return 0;
         }
 
