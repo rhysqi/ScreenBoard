@@ -5,6 +5,6 @@
 int AppCore_ReadFile(const char* FileName);
 
 // App Core functions
-int AppCore_Window();
+int __fastcall AppCore_Window();
 
 #endif /* APP_CORE_H */
