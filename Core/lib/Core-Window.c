@@ -17,6 +17,7 @@ BOOL drawing = FALSE;  // Indicates if we are in the process of drawing
 POINT lastPoint;       // Last mouse position
 HDC memoryHDC;
 HBITMAP hBitmap;
+int brushSize = 5;
 
 int __fastcall AppCore_Window()
 {
@@ -115,6 +116,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
                 // Draw a line from the last point to the current point in memory HDC
                 MoveToEx(memoryHDC, lastPoint.x, lastPoint.y, NULL);
+                HPEN hPen = CreatePen(PS_SOLID, brushSize, RGB(0, 0, 0)); // Create a pen with the current brush size
+                SelectObject(memoryHDC, hPen);
                 LineTo(memoryHDC, currentPoint.x, currentPoint.y);
 
                 // Update the last point to the current point
@@ -146,9 +149,26 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             EndPaint(hwnd, &ps);
             return 0;
         }
+        
         case WM_KEYDOWN:
         {
             ActionKeyDown(hwnd, wParam);
+            return 0;
+        }
+
+        case WM_MOUSEWHEEL:
+        {
+            // Mouse wheel event for scaling brush size
+            int delta = GET_WHEEL_DELTA_WPARAM(wParam); // Get the scroll delta
+            if (delta > 0) // Scrolled up
+            {
+                brushSize++; // Increase brush size
+            }
+            else if (delta < 0) // Scrolled down
+            {
+                if (brushSize > 1) // Ensure brush size does not go below 1
+                    brushSize--; // Decrease brush size
+            }
             return 0;
         }
 
