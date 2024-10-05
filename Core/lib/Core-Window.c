@@ -11,7 +11,7 @@
 #include <minwindef.h>
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-int ActionKeyDown(WPARAM wParam);
+int ActionKeyDown(HWND hwnd, WPARAM wParam);
 
 BOOL drawing = FALSE;  // Indicates if we are in the process of drawing
 POINT lastPoint;       // Last mouse position
@@ -148,7 +148,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         }
         case WM_KEYDOWN:
         {
-            ActionKeyDown(wParam);
+            ActionKeyDown(hwnd, wParam);
             return 0;
         }
 
@@ -159,7 +159,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-int ActionKeyDown(WPARAM wParam)
+int ActionKeyDown(HWND hwnd, WPARAM wParam)
 {
     if(wParam == VK_ESCAPE)
     {
@@ -168,7 +168,12 @@ int ActionKeyDown(WPARAM wParam)
 
     if(wParam == 0x43)
     {
-        MessageBoxW(NULL, L"Hello world", L"This is caption", MB_OK);
+        // Clear the drawing buffer
+        PatBlt(memoryHDC, 0, 0, GetSystemMetrics(SM_CXFULLSCREEN), GetSystemMetrics(SM_CYFULLSCREEN), WHITENESS);
+
+        // Invalidate the window to force a repaint
+        InvalidateRect(hwnd, NULL, TRUE); // hWnd should be a global or passed in some way
+        UpdateWindow(hwnd);
     }
     return 0;
 }
