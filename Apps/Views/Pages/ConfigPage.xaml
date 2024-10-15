@@ -25,34 +25,25 @@
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Board Color" Margin="7" />
-                <TextBox MaxLength="6" Width="50" Margin="0"
+                <TextBox MaxLength="6" Width="50" Margin="0" x:Name="TB_BoardColor"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 000000"
                          AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Board Opacity" Margin="7" />
-                <TextBox MaxLength="3" Width="50"
+                <TextBox MaxLength="3" Width="50" x:Name="TB_BoardOpacity"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 100"
                         AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Pen Color" Margin="7" />
-                <TextBox MaxLength="6" Width="50" HorizontalAlignment="Right"
+                <TextBox MaxLength="6" Width="50" HorizontalAlignment="Right" x:Name="TB_PenColor"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: ffffff"
                         AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>
 
-            <Separator Height="10" />
-            <Button Content="Default" Command="{Binding Default}"
-                    Width="120" VerticalAlignment="Bottom">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5" />
-                    </Style>
-                </Button.Resources>
-            </Button>
             <Separator Height="10" />
             <Button Content="Apply" Command="{Binding Apply}"
                     Width="120" VerticalAlignment="Bottom">

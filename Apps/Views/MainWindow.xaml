@@ -14,13 +14,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1"
-                    VerticalAlignment="Stretch">
-            <Frame NavigationUIVisibility="Hidden" Grid.Row="1"
-                   Source="Pages/ConfigPage.xaml" />
+        <Frame Grid.Column="0" Grid.Row="1" Content="Hello" Source="Pages/ScreenBoardPage.xaml" />
+
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch">
+            <Frame NavigationUIVisibility="Hidden" Grid.Row="1" Source="Pages/ConfigPage.xaml" />
         </StackPanel>
+        
     </Grid>
 </Window>

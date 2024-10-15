@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
+using ScreenBoard.Views.Pages;
 using static ScreenBoard.ViewModels.BaseViewModel;
 
 namespace ScreenBoard.ViewModels.Pages;
@@ -15,7 +16,6 @@ public class ConfigPageViewModel
     public ICommand? RegisterHotkeys {  get; set; }
 
     public ICommand? Apply {  get; set; }
-    public ICommand? Default {  get; set; }
     public ICommand? Verify {  get; set; }
 
     public ConfigPageViewModel()
@@ -23,16 +23,10 @@ public class ConfigPageViewModel
         QuickGuide = new RelayCommand(onQuickGuide);
 
         Apply = new RelayCommand(OnApply);
-        Default = new RelayCommand(OnDefault);
         Verify = new RelayCommand(onVerify);
     }
 
     private void OnApply(object? parameter)
-    {
-        
-    }
-
-    private void OnDefault(object? parameter)
     {
         
     }
