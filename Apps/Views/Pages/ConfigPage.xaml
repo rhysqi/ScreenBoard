@@ -25,21 +25,24 @@
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Board Color" Margin="7" />
-                <TextBox MaxLength="6" Width="50" Margin="0" x:Name="TB_BoardColor"
+                <TextBox MaxLength="6" Width="50" Margin="0" 
+                         Text="{Binding BoardColor, UpdateSourceTrigger=PropertyChanged}"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 000000"
                          AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Board Opacity" Margin="7" />
-                <TextBox MaxLength="3" Width="50" x:Name="TB_BoardOpacity"
+                <TextBox MaxLength="3" Width="50"
+                         Text="{Binding BoardOpacity, UpdateSourceTrigger=PropertyChanged}"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: 100"
-                        AcceptsReturn="False" VerticalAlignment="Center" />
+                         AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>
 
             <WrapPanel>
                 <TextBlock Width="75" Text="Pen Color" Margin="7" />
-                <TextBox MaxLength="6" Width="50" HorizontalAlignment="Right" x:Name="TB_PenColor"
+                <TextBox MaxLength="6" Width="50" HorizontalAlignment="Right"
+                         Text="{Binding PenColor, UpdateSourceTrigger=PropertyChanged}"
                          GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" Tag="eg: ffffff"
                         AcceptsReturn="False" VerticalAlignment="Center" />
             </WrapPanel>

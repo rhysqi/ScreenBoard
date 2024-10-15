@@ -16,14 +16,6 @@ public partial class ConfigPage : Page
         InitializeComponent();
         Loaded += ConfigPage_Loaded;
         DataContext = new ConfigPageViewModel();
-        InterComponent();
-    }
-
-    private void InterComponent()
-    {
-        TB_BoardColor.Text = "000000";
-        TB_BoardOpacity.Text = "255";
-        TB_PenColor.Text = "ffffff";
     }
 
     private void ConfigPage_Loaded(object sender, RoutedEventArgs e)
