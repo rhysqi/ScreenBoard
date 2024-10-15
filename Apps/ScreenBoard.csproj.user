@@ -7,15 +7,9 @@
     <Compile Update="Views\Pages\ConfigPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Pages\ScreenBoardPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Pages\ConfigPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\Pages\ScreenBoardPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
