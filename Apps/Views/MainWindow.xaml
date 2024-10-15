@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ScreenBoard.Views" xmlns:viewmodels="clr-namespace:ScreenBoard.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ScreenBoard Config" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Frame Grid.Column="0" Grid.Row="1" Content="Hello" Source="Pages/ScreenBoardPage.xaml" />
+        <Frame Grid.Column="0" Grid.Row="1" Source="Pages/ScreenBoardPage.xaml" />
 
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch">
             <Frame NavigationUIVisibility="Hidden" Grid.Row="1" Source="Pages/ConfigPage.xaml" />
