@@ -8,7 +8,8 @@
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nShowCmd)
 {
-	AppCore_ReadFile("");
+	AppCore_ReadFile("Core.txt");
+	AppCore_Window();
 
 	return 0;
 }

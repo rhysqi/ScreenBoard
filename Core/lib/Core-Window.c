@@ -40,8 +40,8 @@ int __fastcall AppCore_Window()
         return 0;
     }
 
-    int Height = GetSystemMetrics(SM_CYFULLSCREEN);
-    int Width = GetSystemMetrics(SM_CXFULLSCREEN);
+    int Height = GetSystemMetrics(SM_CYMAXIMIZED);
+    int Width = GetSystemMetrics(SM_CXMAXIMIZED);
 
     // Create the init screen window
     HWND hInitWindow = CreateWindowExW(
@@ -59,7 +59,7 @@ int __fastcall AppCore_Window()
     }
 
     // Make the window transparent
-    SetLayeredWindowAttributes(hInitWindow, 0, 200, LWA_ALPHA);
+    SetLayeredWindowAttributes(hInitWindow, 0, 128, LWA_ALPHA);
 
     // Create a memory HDC for off-screen drawing
     HDC hdc = GetDC(hInitWindow);
