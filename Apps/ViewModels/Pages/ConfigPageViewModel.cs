@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,9 +15,9 @@ public class ConfigPageViewModel
     public ICommand? Apply {  get; set; }
     public ICommand? Verify {  get; set; }
 
-    private string _boardColor = "";
-    private string _boardOpacity = "";
-    private string _penColor = "";
+    private string _boardColor = "000000";
+    private string _boardOpacity = "255";
+    private string _penColor = "ffffff";
 
     public string BoardColor
     {
@@ -58,6 +59,9 @@ public class ConfigPageViewModel
 
     private void OnApply(object? parameter)
     {
+        string ScreenBoardData = "ScreenBoardData#" + BoardColor +  "#" + BoardOpacity + "#" + PenColor;
+        File.WriteAllTextAsync("ScreenBoardData.txt", ScreenBoardData);
+
         // Display the values in a MessageBox
         MessageBox.Show($"Board Color: {BoardColor}\nBoard Opacity: {BoardOpacity}\nPen Color: {PenColor}",
                         "Configuration Applied", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -65,7 +69,10 @@ public class ConfigPageViewModel
 
     private void onVerify(object? parameter)
     {
-
+        if (!Directory.Exists("./Core.exe"))
+        {
+            MessageBox.Show("Your core app are not here!\0", "App Verify", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void onQuickGuide(object? parameter)
@@ -76,10 +83,15 @@ public class ConfigPageViewModel
             + "RMB: for swapping between pen and eraser\n"
             + "Scroll: for change size\n"
             + "C: for clear board\n\0";
-        
+
+        const string Msg2 = 
+            "Apply: export your config\n" 
+            + "Verify: Check your core application\0";
+
         const string Cap = "ScreenBoard Quick Guide";
 
         MessageBox.Show(Msg1, Cap, MessageBoxButton.OK, MessageBoxImage.Information);
+        MessageBox.Show(Msg2, Cap, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
