@@ -2,8 +2,8 @@
 #define UNICODE
 #endif /* UNICODE */
 
-#include "../include/App-Core.h"
 #include "Core-Event.h"
+#include "../include/App-Core.h"
 
 #define MARGIN 3
 
@@ -11,18 +11,31 @@
 #include <winuser.h>
 #include <minwindef.h>
 
+unsigned int BoardColor;
+unsigned int Opacity;
+unsigned int PenColor;
+
+int DrawRegionLimitX;
+int DrawRegionLimitY;
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 BOOL drawing = FALSE;  // Indicates if we are in the process of drawing
 BOOL erasing = FALSE;  // Indicates if we are in the process of erasing
 POINT lastPoint;       // Last mouse position
 
+int brushSize = 5;
 HDC memoryHDC;
 HBITMAP hBitmap;
-int brushSize = 5;
+
+unsigned int brushValue = 0xffffffff;
+int alphaValue = 125;
 
 int __fastcall AppCore_Window()
 {
+    DrawRegionLimitX = GetSystemMetrics(SM_CXMAXIMIZED);
+    DrawRegionLimitY = GetSystemMetrics(SM_CYMAXIMIZED);
+
     // Get the instance handle
     HINSTANCE hInstance = GetModuleHandle(NULL);
 
@@ -59,7 +72,7 @@ int __fastcall AppCore_Window()
     }
 
     // Make the window transparent
-    SetLayeredWindowAttributes(hInitWindow, 0, 128, LWA_ALPHA);
+    SetLayeredWindowAttributes(hInitWindow, 0, alphaValue, LWA_ALPHA);
 
     // Create a memory HDC for off-screen drawing
     HDC hdc = GetDC(hInitWindow);
@@ -120,15 +133,15 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 currentPoint.y = HIWORD(lParam);
 
                 // Check if the current point is within the margin
-                if (currentPoint.x < MARGIN || currentPoint.x > GetSystemMetrics(SM_CXFULLSCREEN) - MARGIN ||
-                    currentPoint.y < MARGIN || currentPoint.y > GetSystemMetrics(SM_CYFULLSCREEN) - MARGIN) {
+                if (currentPoint.x < MARGIN || currentPoint.x > DrawRegionLimitX + MARGIN ||
+                    currentPoint.y < MARGIN || currentPoint.y > DrawRegionLimitY + MARGIN) {
                     // If it reaches the limit, don't draw
                     return 0;
                 }
 
                 // Draw a line from the last point to the current point in memory HDC
                 MoveToEx(memoryHDC, lastPoint.x, lastPoint.y, NULL);
-                HPEN hPen = CreatePen(PS_SOLID, brushSize, RGB(0, 0, 0)); // Create a pen with the current brush size
+                HPEN hPen = CreatePen(PS_SOLID,  brushSize, RGB(0, 0, 0)); // Create a pen with the current brush size
                 SelectObject(memoryHDC, hPen);
                 LineTo(memoryHDC, currentPoint.x, currentPoint.y);
 
@@ -146,8 +159,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
                 currentPoint.y = HIWORD(lParam);
 
                 // Check if the current point is within the margin
-                if (currentPoint.x < MARGIN || currentPoint.x > GetSystemMetrics(SM_CXFULLSCREEN) - MARGIN ||
-                    currentPoint.y < MARGIN || currentPoint.y > GetSystemMetrics(SM_CYFULLSCREEN) - MARGIN) {
+                if (currentPoint.x < MARGIN || currentPoint.x > DrawRegionLimitX - MARGIN ||
+                    currentPoint.y < MARGIN || currentPoint.y > DrawRegionLimitY - MARGIN) {
                     // If it reaches the limit, don't draw
                     return 0;
                 }
@@ -188,7 +201,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hwnd, &ps);
 
             // Copy the memory HDC (off-screen drawing) to the window's HDC
-            BitBlt(hdc, 0, 0, GetSystemMetrics(SM_CXFULLSCREEN), GetSystemMetrics(SM_CYFULLSCREEN), memoryHDC, 0, 0, SRCCOPY);
+            BitBlt(hdc, 0, 0, DrawRegionLimitX, DrawRegionLimitY, memoryHDC, 0, 0, SRCCOPY);
 
             EndPaint(hwnd, &ps);
             return 0;
